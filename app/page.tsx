@@ -50,22 +50,22 @@ export default function APAEHomePage() {
 
   const moduleItems = [
   {
-    title: "Coordenação Motora",
-    description: "Atividades para desenvolver habilidades motoras finas e grossas",
+    title: "Quiz sobre Animais",
+    description: "Atividades para desenvolver habilidades de detecção de animais",
     icon: <Activity className="h-8 w-8" />,
     color: "bg-gradient-to-br from-red-400 to-pink-400",
     textColor: "text-red-600",
-    activities: "12 atividades",
-    path: "/atividades/coordenacao-motora", // <-- Adicionado
+    activities: "Quiz",
+    path: "/modulo_1/quiz_animais.html", // <-- Adicionado
   },
   {
-    title: "Jogos Educativos",
-    description: "Jogos divertidos que estimulam o aprendizado e a cognição",
+    title: "Quiz sobre Frutas",
+    description: "Quiz divertido para incentivar a detecção de Itens",
     icon: <Gamepad2 className="h-8 w-8" />,
     color: "bg-gradient-to-br from-indigo-400 to-purple-400",
     textColor: "text-indigo-600",
-    activities: "8 jogos",
-    path: "/atividades/jogos-educativos", // <-- Adicionado
+    activities: "Quiz",
+    path: "/modulo_1/quiz_frutas.html", // <-- Adicionado
   },
   {
     title: "Música e Ritmo",
