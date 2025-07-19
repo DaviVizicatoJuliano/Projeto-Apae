@@ -14,6 +14,7 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from 'next/link';
 
 export default function APAEHomePage() {
   const documentationItems = [
@@ -48,55 +49,61 @@ export default function APAEHomePage() {
   ]
 
   const moduleItems = [
-    {
-      title: "Coordenação Motora",
-      description: "Atividades para desenvolver habilidades motoras finas e grossas",
-      icon: <Activity className="h-8 w-8" />,
-      color: "bg-gradient-to-br from-red-400 to-pink-400",
-      textColor: "text-red-600",
-      activities: "12 atividades",
-    },
-    {
-      title: "Jogos Educativos",
-      description: "Jogos divertidos que estimulam o aprendizado e a cognição",
-      icon: <Gamepad2 className="h-8 w-8" />,
-      color: "bg-gradient-to-br from-indigo-400 to-purple-400",
-      textColor: "text-indigo-600",
-      activities: "8 jogos",
-    },
-    {
-      title: "Música e Ritmo",
-      description: "Atividades musicais para estimular a expressão e coordenação",
-      icon: <Music className="h-8 w-8" />,
-      color: "bg-gradient-to-br from-teal-400 to-green-400",
-      textColor: "text-teal-600",
-      activities: "15 atividades",
-    },
-    {
-      title: "Quebra-cabeças",
-      description: "Puzzles adaptados para diferentes níveis de habilidade",
-      icon: <Puzzle className="h-8 w-8" />,
-      color: "bg-gradient-to-br from-orange-400 to-red-400",
-      textColor: "text-orange-600",
-      activities: "20 puzzles",
-    },
-    {
-      title: "Expressão Facial",
-      description: "Atividades para reconhecimento e expressão de emoções",
-      icon: <Smile className="h-8 w-8" />,
-      color: "bg-gradient-to-br from-pink-400 to-rose-400",
-      textColor: "text-pink-600",
-      activities: "10 exercícios",
-    },
-    {
-      title: "Comunicação",
-      description: "Ferramentas para desenvolver habilidades de comunicação",
-      icon: <Users className="h-8 w-8" />,
-      color: "bg-gradient-to-br from-cyan-400 to-blue-400",
-      textColor: "text-cyan-600",
-      activities: "18 atividades",
-    },
-  ]
+  {
+    title: "Coordenação Motora",
+    description: "Atividades para desenvolver habilidades motoras finas e grossas",
+    icon: <Activity className="h-8 w-8" />,
+    color: "bg-gradient-to-br from-red-400 to-pink-400",
+    textColor: "text-red-600",
+    activities: "12 atividades",
+    path: "/atividades/coordenacao-motora", // <-- Adicionado
+  },
+  {
+    title: "Jogos Educativos",
+    description: "Jogos divertidos que estimulam o aprendizado e a cognição",
+    icon: <Gamepad2 className="h-8 w-8" />,
+    color: "bg-gradient-to-br from-indigo-400 to-purple-400",
+    textColor: "text-indigo-600",
+    activities: "8 jogos",
+    path: "/atividades/jogos-educativos", // <-- Adicionado
+  },
+  {
+    title: "Música e Ritmo",
+    description: "Atividades musicais para estimular a expressão e coordenação",
+    icon: <Music className="h-8 w-8" />,
+    color: "bg-gradient-to-br from-teal-400 to-green-400",
+    textColor: "text-teal-600",
+    activities: "15 atividades",
+    path: "/atividades/musica-ritmo", // <-- Adicionado
+  },
+  {
+    title: "Quebra-cabeças",
+    description: "Puzzles adaptados para diferentes níveis de habilidade",
+    icon: <Puzzle className="h-8 w-8" />,
+    color: "bg-gradient-to-br from-orange-400 to-red-400",
+    textColor: "text-orange-600",
+    activities: "20 puzzles",
+    path: "/atividades/quebra-cabecas", // <-- Adicionado
+  },
+  {
+    title: "Expressão Facial",
+    description: "Atividades para reconhecimento e expressão de emoções",
+    icon: <Smile className="h-8 w-8" />,
+    color: "bg-gradient-to-br from-pink-400 to-rose-400",
+    textColor: "text-pink-600",
+    activities: "10 exercícios",
+    path: "/atividades/expressao-facial", // <-- Adicionado
+  },
+  {
+    title: "Comunicação",
+    description: "Ferramentas para desenvolver habilidades de comunicação",
+    icon: <Users className="h-8 w-8" />,
+    color: "bg-gradient-to-br from-cyan-400 to-blue-400",
+    textColor: "text-cyan-600",
+    activities: "18 atividades",
+    path: "/atividades/comunicacao", // <-- Adicionado
+  },
+]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
@@ -200,7 +207,7 @@ export default function APAEHomePage() {
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h3 className="text-4xl font-bold mb-4 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-              🎯 Módulos de Atividades
+              Módulo I 
             </h3>
             <p className="text-xl text-gray-700 max-w-2xl mx-auto">
               Atividades lúdicas e educativas desenvolvidas especialmente para estimular o desenvolvimento
@@ -222,8 +229,10 @@ export default function APAEHomePage() {
                 </CardHeader>
                 <CardContent className="p-6">
                   <CardDescription className="text-gray-600 mb-4">{item.description}</CardDescription>
-                  <Button className={`w-full ${item.textColor} border-current`} variant="outline">
-                    Explorar Atividades
+                  <Button asChild className={`w-full ${item.textColor} border-current`} variant="outline">
+                    <Link href={item.path}>
+                      Explorar Atividades
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
