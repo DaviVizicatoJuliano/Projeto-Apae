@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Animais da Fazenda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .option-button.correct { background-color: #22c55e; border-color: #16a34a; color: white; }
+        .option-button.incorrect { background-color: #ef4444; border-color: #dc2626; color: white; }
+        .option-button:disabled { cursor: not-allowed; opacity: 0.8; }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center min-h-screen p-4 font-sans">
+    <main id="quiz-container" class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-lg w-full max-w-2xl">
+        <div id="start-screen" class="text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-white mb-4">Quiz: Animais da Fazenda</h1>
+            <p class="text-gray-600 dark:text-gray-300 mt-2 text-lg mb-8">Veja a imagem e clique no nome correto do animal.</p>
+            <button id="start-button" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-xl shadow-md transition-transform transform hover:scale-105">Começar!</button>
+        </div>
+        <div id="question-screen" class="hidden">
+            <div class="mb-6 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center h-64">
+                <img id="item-image" src="" alt="Item a ser identificado" class="max-h-full max-w-full object-contain rounded-lg">
+            </div>
+            <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">Que animal é este?</h2>
+            <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+            <div id="feedback-container" class="mt-6 text-center">
+                <p id="feedback-text" class="text-xl font-bold h-7"></p>
+                <button id="next-button" class="hidden mt-4 w-full bg-gray-800 dark:bg-gray-200 hover:bg-gray-700 dark:hover:bg-gray-300 text-white dark:text-black font-bold py-3 px-8 rounded-lg text-lg">Próximo</button>
+            </div>
+        </div>
+        <div id="end-screen" class="hidden text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-white mb-4">Fim de Jogo!</h1>
+            <p id="score-text" class="text-gray-600 dark:text-gray-300 mt-2 text-2xl mb-8"></p>
+            <button id="restart-button" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-xl shadow-md transition-transform transform hover:scale-105">Jogar Novamente</button>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const questions = [
+                { image: 'https://placehold.co/600x400/e2e8f0/334155?text=Vaca', options: ['Vaca', 'Gato', 'Cachorro', 'Leão'], correctAnswer: 'Vaca' },
+                { image: 'https://placehold.co/600x400/e2e8f0/334155?text=Galinha', options: ['Pato', 'Galinha', 'Peru', 'Pombo'], correctAnswer: 'Galinha' },
+                { image: 'https://placehold.co/600x400/e2e8f0/334155?text=Porco', options: ['Cavalo', 'Javali', 'Porco', 'Ovelha'], correctAnswer: 'Porco' },
+                { image: 'https://placehold.co/600x400/e2e8f0/334155?text=Ovelha', options: ['Cabra', 'Ovelha', 'Bode', 'Lhama'], correctAnswer: 'Ovelha' },
+                { image: 'https://placehold.co/600x400/e2e8f0/334155?text=Cavalo', options: ['Burro', 'Zebra', 'Cavalo', 'Mula'], correctAnswer: 'Cavalo' }
+            ];
+            let shuffledQuestions = [], currentQuestionIndex = 0, score = 0;
+            const startScreen = document.getElementById('start-screen'), questionScreen = document.getElementById('question-screen'), endScreen = document.getElementById('end-screen');
+            const startButton = document.getElementById('start-button'), restartButton = document.getElementById('restart-button'), nextButton = document.getElementById('next-button');
+            const itemImage = document.getElementById('item-image'), optionsContainer = document.getElementById('options-container'), feedbackText = document.getElementById('feedback-text'), scoreText = document.getElementById('score-text');
+            function startGame() {
+                shuffledQuestions = [...questions].sort(() => Math.random() - 0.5);
+                currentQuestionIndex = 0; score = 0;
+                startScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+                questionScreen.classList.remove('hidden'); nextButton.classList.add('hidden');
+                loadQuestion();
+            }
+            function loadQuestion() {
+                feedbackText.textContent = ''; nextButton.classList.add('hidden'); optionsContainer.innerHTML = '';
+                const question = shuffledQuestions[currentQuestionIndex];
+                itemImage.src = question.image; itemImage.alt = `Imagem de um(a) ${question.correctAnswer}`;
+                question.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = 'option-button w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-semibold py-4 px-4 rounded-lg text-lg border-2 border-transparent transition';
+                    button.addEventListener('click', () => selectAnswer(option, button));
+                    optionsContainer.appendChild(button);
+                });
+            }
+            function selectAnswer(selectedOption, selectedButton) {
+                const question = shuffledQuestions[currentQuestionIndex];
+                const isCorrect = selectedOption === question.correctAnswer;
+                document.querySelectorAll('.option-button').forEach(btn => btn.disabled = true);
+                if (isCorrect) {
+                    score++; selectedButton.classList.add('correct');
+                    feedbackText.textContent = 'Correto!'; feedbackText.className = 'text-xl font-bold text-green-500';
+                } else {
+                    selectedButton.classList.add('incorrect');
+                    feedbackText.textContent = 'Incorreto!'; feedbackText.className = 'text-xl font-bold text-red-500';
+                    document.querySelectorAll('.option-button').forEach(btn => { if (btn.textContent === question.correctAnswer) btn.classList.add('correct'); });
+                }
+                nextButton.classList.remove('hidden');
+            }
+            function showNextQuestion() {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < shuffledQuestions.length) loadQuestion(); else showEndScreen();
+            }
+            function showEndScreen() {
+                questionScreen.classList.add('hidden'); endScreen.classList.remove('hidden');
+                scoreText.textContent = `Você acertou ${score} de ${shuffledQuestions.length}.`;
+            }
+            startButton.addEventListener('click', startGame);
+            restartButton.addEventListener('click', startGame);
+            nextButton.addEventListener('click', showNextQuestion);
+        });
+    </script>
+</body>
+</html>
