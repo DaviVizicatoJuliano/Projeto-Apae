@@ -56,7 +56,7 @@ export default function APAEHomePage() {
     color: "bg-gradient-to-br from-red-400 to-pink-400",
     textColor: "text-red-600",
     activities: "Quiz",
-    path: "/modulo_1/quiz_animais.html", // <-- Adicionado
+    path: "modulo_1/quiz_animais.html", // <-- Adicionado
   },
   {
     title: "Quiz sobre Frutas",
@@ -65,7 +65,7 @@ export default function APAEHomePage() {
     color: "bg-gradient-to-br from-indigo-400 to-purple-400",
     textColor: "text-indigo-600",
     activities: "Quiz",
-    path: "/modulo_1/quiz_frutas.html", // <-- Adicionado
+    path: "modulo_1/quiz_frutas.html", // <-- Adicionado
   },
   {
     title: "Música e Ritmo",
